@@ -3,10 +3,10 @@ import java.util.*;
 public class skyline {
 	public List<int[]> getSkyline(int[][] buildings){
 		List<int[]> res = new ArrayList<int[]>();
-		PriorityQueue<Node> all = new PriorityQueue<Node>();
+		PriorityQueue<buildingNode> all = new PriorityQueue<buildingNode>();
 		for(int[] building:buildings) {
-			Node b = new Node(building[0],-building[2]);
-			Node e = new Node(building[1],building[2]);
+			buildingNode b = new buildingNode(building[0],-building[2]);
+			buildingNode e = new buildingNode(building[1],building[2]);
 			all.offer(b);
 			all.offer(e);
 		}
@@ -20,7 +20,7 @@ public class skyline {
 		heights.offer(0);
 		int pre = 0;
 		while(!all.isEmpty()) {
-			Node cur = all.poll();
+			buildingNode cur = all.poll();
 			if(cur.h<0) {
 				heights.offer(-cur.h);
 			}
@@ -42,15 +42,15 @@ public class skyline {
 	}
 
 }
-class Node implements Comparable<Node>{
+class buildingNode implements Comparable<buildingNode>{
 	int i;
 	int h;
-	public Node(int i,int h) {
+	public buildingNode(int i,int h) {
 		this.i = i;
 		this.h= h;
 	}
 	@Override
-	public int compareTo(Node n) {
+	public int compareTo(buildingNode n) {
 		if(this.i==n.i) {
 			if(this.h<n.h) return -1;
 			if(this.h==n.h) return 0;
